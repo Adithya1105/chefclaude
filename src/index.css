@@ -1,0 +1,178 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f7f9;
+  color: #333;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background-color: rgb(234, 243, 246);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Chef Image */
+.chef {
+  height: 100px;
+  max-width: 100%;
+}
+
+/* Ingredient Form */
+.ingridentform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 15px;
+}
+
+.ingridentform input {
+  border-radius: 7px;
+  border: 1px solid #8799b9;
+  flex-grow: 1;
+  min-width: 180px;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.ingridentform input:focus {
+  border-color: #333;
+  outline: none;
+}
+
+/* Submit Button */
+.ingridentform button {
+  border-radius: 6px;
+  font-size: 0.875rem;
+  border: none;
+  background-color: #101916;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  width: 160px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.ingridentform button::before {
+  content: "+";
+  margin-right: 5px;
+}
+
+.ingridentform button:hover {
+  background-color: #2d353c;
+}
+
+.ingridentform button:active {
+  background-color: #444;
+}
+
+/* Main Section */
+main {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Recipe Container */
+.get-recipe-container {
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.get-recipe-container h2 {
+  color: #2d2c2c;
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.get-recipe-container p {
+  color: #555;
+  font-size: 14px;
+}
+
+/* General Button Styling */
+button {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 15px auto;
+  padding: 12px 20px;
+  background: #434a52;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #101916;
+}
+
+button:active {
+  background: #2d2c2c;
+}
+
+/* Recipe Image */
+.recipe-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  margin-top: 15px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .chef {
+    height: 80px;
+  }
+
+  .ingridentform {
+    flex-direction: column;
+  }
+
+  .ingridentform input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ingridentform button {
+    width: 100%;
+  }
+
+  .get-recipe-container {
+    max-width: 100%;
+    padding: 15px;
+  }
+}
