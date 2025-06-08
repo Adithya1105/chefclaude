@@ -1,25 +1,25 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React from 'react';
+import './App.css';      // your existing CSS (without the background-image)
+import Header from './components/header';
+import Main   from './main';
 
-function App() {
+export default function App() {
+  
+  const bgUrl = process.env.PUBLIC_URL + '/images/kitchen.jpg';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="App"
+      style={{
+        backgroundImage: `url(${bgUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh'  
+      }}
+    >
+      <Header />
+      <Main />
     </div>
   );
 }
-
-export default App;

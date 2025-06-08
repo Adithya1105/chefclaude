@@ -44,11 +44,10 @@ export const getRecipeImage = async (recipeDescription) => {
                     Authorization: `Bearer ${hf}`,
                     "Content-Type": "application/json",
                 },
-                responseType: "arraybuffer", // Ensure image data is returned correctly
+                responseType: "arraybuffer",
             }
         );
 
-        // Convert binary image data to base64 for display
         const base64Image = Buffer.from(response.data, "binary").toString("base64");
         const imageUrl = `data:image/png;base64,${base64Image}`;
 
