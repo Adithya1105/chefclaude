@@ -1,25 +1,3 @@
-// import PropTypes from 'prop-types'
-// import ReactMarkdown from "react-markdown"
-// //import ReactMarkdown from 'react-markdown'
-
-
-
-
-// const ClaudeRecipe = (props) => {
-//     return (
-//         <section className="suggested-recipe-container" arial-live="polite">
-//           <h2>Chef claude Recommends :</h2>
-          
-//           <ReactMarkdown>{props.recipe}</ReactMarkdown>
-//         </section>
-//     );
-// };
-
-// export default ClaudeRecipe;
-
-
-
-
 
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
@@ -44,7 +22,7 @@ const ClaudeRecipe = (props) => {
             {imageUrl ? (
             <img src={imageUrl} alt="Recipe" className="recipe-image" />
         ) : (
-            <p>Loading image...</p> // ✅ Placeholder while loading
+            <p>Loading image...</p> 
         )}
     </section>
 );

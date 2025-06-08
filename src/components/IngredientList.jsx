@@ -1,24 +1,32 @@
-export default function IngredientList(props) {
-  const ingredientlistitems = props.ingredients.map((ingredient) => (
-    <li key={ingredient}>{ingredient}</li>
-  ));
+import React from 'react';
+import PropTypes from 'prop-types';
 
+
+function IngredientList({ ingredients, onRemove }) {
   return (
     <section>
-      <h2>Ingredients on hand </h2>
-
-      <ul className="indgredient-List" aria-live="polite">
-        {ingredientlistitems}
+      <h2 className="ingredientheading">Ingredients on hand</h2>
+      <ul className="ingredient-list">
+        {ingredients.map(ing => (
+          <li className="ingredient-item" key={ing}>
+            <span className="ingredient-text">{ing}</span>
+            <button
+              className="remove-btn"
+              onClick={() => onRemove(ing)}
+              aria-label={`Remove ${ing}`}
+            >
+              ×
+            </button>
+          </li>
+        ))}
       </ul>
-      {props.ingredients.length >= 3 && (
-        <div className="get-recipe-container">
-          <div>
-            <h2>Ready for a recipe</h2>
-            <p>Generating the recipe based on the list of your ingredients</p>
-          </div>
-          <button onClick={props.getRecipe}>Get a recipe</button>
-        </div>
-      )}
     </section>
   );
 }
+
+IngredientList.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
+
+export default React.memo(IngredientList);

@@ -1,47 +1,85 @@
-import { useState } from "react";
-import React from "react";
-import IngredientList from "./components/IngredientList";
-import ClaudeRecipe from "./components/ClaudeRecipe";
-import getRecipeFromMistral from "./ai"; 
+import React, {
+  useState,
+  useCallback,
+  Suspense,
+  lazy
+} from 'react';
+
+import IngredientInput      from './components/IngredientInput';
+import IngredientList       from './components/IngredientList';
+import getRecipeFromMistral from './ai';
+
+const RecipeViewer = lazy(() => import('./components/RecipeViewer'));
 
 export default function Main() {
-  const [ingredients, setIngredients] = React.useState([]);
-  const [recipeShown, setRecipeShown] = React.useState(false);
-  const [recipe, setRecipe] = React.useState("");
+  const [ingredients, setIngredients] = useState([]);
+  const [recipe,      setRecipe]      = useState(null);
+  const [loading,     setLoading]     = useState(false);
 
-  async function getRecipe() {
+  const addIngredient = useCallback(ing =>
+    setIngredients(prev => [...prev, ing])
+  , []);
+
+  const removeIngredient = useCallback(ing =>
+    setIngredients(prev => prev.filter(i => i !== ing))
+  , []);
+
+  const fetchRecipe = useCallback(async () => {
+    setLoading(true);
     try {
-      const recipeMarkdown = await getRecipeFromMistral(ingredients);
-      console.log(recipeMarkdown);
-      setRecipe(recipeMarkdown); 
-      setRecipeShown(true);
-    } catch (error) {
-      console.error("Error fetching recipe:", error);
+      const md = await getRecipeFromMistral(ingredients);
+      setRecipe(md);
+    } finally {
+      setLoading(false);
     }
-  }
+  }, [ingredients]);
 
-  function addingredient(formData) {
-    const newIngredient = formData.get("ingredient");
-    setIngredients((prevIngredient) => [...prevIngredient, newIngredient]);
-  }
+
+  const bgUrl = process.env.PUBLIC_URL + '/images/kitchenn.jpg';
 
   return (
-    <main>
-      <form action={addingredient} className="ingridentform">
-        <input
-          type="text"
-          placeholder="e.g chicken"
-          aria-label="Add Ingredient"
-          name="ingredient"
+    <main
+      style={{
+        backgroundImage:  `url(${bgUrl})`,
+        backgroundSize:   'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        width:            '100%',      
+        minHeight:        '100vh',    
+        padding:          '2rem',     
+        boxSizing:        'border-box' 
+      }}
+    >
+      {}
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <IngredientInput
+          ingredients={ingredients}
+          onAdd={addIngredient}
         />
-        <button type="submit">Add Ingredient</button>
-      </form>
 
-      {ingredients.length > 0 && (
-        <IngredientList ingredients={ingredients} getRecipe={getRecipe} />
-      )}
+        {ingredients.length > 0 && (
+          <IngredientList
+            ingredients={ingredients}
+            onRemove={removeIngredient}
+          />
+        )}
 
-      {recipeShown && <ClaudeRecipe recipe={recipe} />}
+        {ingredients.length >= 3 && (
+          <button
+            className="get-recipe"
+            onClick={fetchRecipe}
+            disabled={loading}
+          >
+            {loading ? 'Generating…' : 'Get a Recipe'}
+          </button>
+        )}
+
+        {recipe && (
+          <Suspense fallback={<p>Loading recipe viewer…</p>}>
+            <RecipeViewer recipeMarkdown={recipe} />
+          </Suspense>
+        )}
+      </div>
     </main>
   );
 }
